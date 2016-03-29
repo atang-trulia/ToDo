@@ -9,3 +9,4 @@ Android App to create a list of tasks with the following features:
 3. Edit item 
 
  
+![Alt text](ToDo.gif?raw=true "Optional Title")
