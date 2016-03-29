@@ -1,7 +1,9 @@
 package com.atang.androidtodo;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatTextView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,17 +19,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
 
+    public static final String EXTRA_ORIGINAL_TEXT = "EXTRA_ORIGINAL_TEXT";
+    public static final String EXTRA_ORIGINAL_POSITION = "EXTRA_ORIGINAL_POSITION";
     ListView listView;
     ArrayList<String> items;
     ArrayAdapter<String> itemsAdapter;
+    private int REQUEST_CODE_EDIT = 200;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        listView = (ListView) findViewById(R.id.todo_list);
+        listView = (ListView) findViewById(R.id.lvItems);
         readItemsFromFile();
         itemsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
         listView.setAdapter(itemsAdapter);
@@ -44,19 +49,40 @@ public class MainActivity extends ActionBarActivity {
             return true;
           }
         });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intentEditItem = new Intent(MainActivity.this, EditItemActivity.class);
+                String originalText = (String) ((AppCompatTextView) view).getText();
+                intentEditItem.putExtra(EXTRA_ORIGINAL_TEXT, originalText);
+                intentEditItem.putExtra(EXTRA_ORIGINAL_POSITION, position);
+                startActivityForResult(intentEditItem, REQUEST_CODE_EDIT);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_EDIT) {
+            int originalPosition = data.getExtras().getInt(EXTRA_ORIGINAL_POSITION);
+            String newText = data.getExtras().getString(EXTRA_ORIGINAL_TEXT);
+            items.set(originalPosition, newText);
+            itemsAdapter.notifyDataSetChanged();
+            writeItemsToFile();
+        }
     }
 
     public void onAddItem(View view){
-        EditText itemText = (EditText) findViewById(R.id.editText);
-        String newItem = itemText.getText().toString();
-        itemsAdapter.add(newItem);
-        itemText.setText(null);
+        EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
+        String newItemText = etNewItem.getText().toString();
+        itemsAdapter.add(newItemText);
+        etNewItem.setText("");
         writeItemsToFile();
     }
 
     private void readItemsFromFile() {
         File filesDir = getFilesDir();
-        System.out.println(filesDir);
         File todoFile = new File(filesDir, "todo.txt");
         try {
             items = new ArrayList<String>(FileUtils.readLines(todoFile));
