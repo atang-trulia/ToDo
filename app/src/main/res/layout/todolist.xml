@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/todoText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:hint="todoText"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/DateLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/PriorityLabel"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/PriorityLabel"
+        android:text="Due:  " />
+
+    <TextView
+        android:id="@+id/dateView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/DateLabel"
+        android:layout_toRightOf="@+id/DateLabel"
+        android:hint="not set"
+        android:textStyle="italic" />
+
+    <TextView
+        android:id="@+id/PriorityLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/todoText"
+        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@+id/priorityView"
+        android:text="Priority:  " />
+
+    <TextView
+        android:id="@+id/priorityView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/todoText"
+        android:hint="PriorityText"
+        android:text=""
+        android:textStyle="italic" />
+
+</RelativeLayout>

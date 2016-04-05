@@ -1,28 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <TextView
+        android:id="@+id/tvEditItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Edit Item Below:"
-        android:textSize="25sp"
         android:paddingTop="30dp"
-        android:id="@+id/tvEditItem" />
+        android:text="@string/edit_item_below"
+        android:textSize="25sp" />
 
     <EditText
+        android:id="@+id/etEditItemText"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:hint="original text"
-        android:paddingTop="30dp"
-        android:id="@+id/etEditItemText" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tvEditItem"
+        android:layout_marginLeft="35dp"
+        android:hint="@string/original_text"
+        android:paddingTop="30dp" />
 
-    <Button
+    <TextView
+        android:id="@+id/tvEditItemPriority"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save"
-        android:layout_marginTop="30dp"
-        android:id="@+id/btnEditItemSave" />
+        android:layout_below="@id/etEditItemText"
+        android:paddingTop="30dp"
+        android:text="@string/priority"
+        android:textSize="25sp" />
 
-</LinearLayout>
+
+    <RadioGroup
+        android:id="@+id/rgEditItemPriorityText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tvEditItemPriority"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rbPriorityLow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="35dp"
+            android:layout_marginStart="35dp"
+            android:text="@string/low" />
+
+        <RadioButton
+            android:id="@+id/rbPriorityMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="35dp"
+            android:layout_marginStart="35dp"
+            android:text="@string/medium" />
+
+        <RadioButton
+            android:id="@+id/rbPriorityHigh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="35dp"
+            android:layout_marginStart="35dp"
+            android:text="@string/high" />
+
+    </RadioGroup>
+
+
+    <Button
+        android:id="@+id/btnEditItemChangeDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/rgEditItemPriorityText"
+        android:layout_marginTop="30sp"
+        android:text="@string/change_date" />
+
+    <TextView
+        android:id="@+id/tvEditItemDuedate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rgEditItemPriorityText"
+        android:layout_marginLeft="25sp"
+        android:layout_toRightOf="@id/btnEditItemChangeDate"
+        android:hint="@string/date_not_set"
+        android:paddingTop="40dp"
+        android:textSize="25sp"
+        android:textStyle="italic" />
+
+    <Button
+        android:id="@+id/btnEditItemSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/save" />
+
+</RelativeLayout>

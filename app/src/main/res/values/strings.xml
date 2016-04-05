@@ -1,6 +1,20 @@
 <resources>
     <string name="app_name">AndroidToDo</string>
-
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    // MainActivity
+    <string name="enter_a_new_item">enter a new item</string>
+    <string name="add_item">ADD ITEM</string>
+
+    // EditItemActivity
+    <string name="edit_item_below">Edit Item Below:</string>
+    <string name="original_text">original text</string>
+    <string name="priority">Priority:</string>
+    <string name="low">Low</string>
+    <string name="medium">Medium</string>
+    <string name="high">High</string>
+    <string name="change_date">Change Date</string>
+    <string name="date_not_set">Date not set</string>
+    <string name="save">Save</string>
+
 </resources>
