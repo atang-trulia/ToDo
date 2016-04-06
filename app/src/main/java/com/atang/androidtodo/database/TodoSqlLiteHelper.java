@@ -9,11 +9,24 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class TodoSqlLiteHelper extends SQLiteOpenHelper {
 
+    private static TodoSqlLiteHelper mInstance = null;
+
     // Example from
     // http://guides.codepath.com/android/Local-Databases-with-SQLiteOpenHelper
-    public TodoSqlLiteHelper(Context context){
+    private TodoSqlLiteHelper(Context context){
         super(context, "todo_db", null, 1);
     }
+
+    public static TodoSqlLiteHelper getInstance(Context ctx) {
+        // Use the application context, which will ensure that you
+        // don't accidentally leak an Activity's context.
+        // See this article for more information: http://bit.ly/6LRzfx
+        if (mInstance == null) {
+            mInstance = new TodoSqlLiteHelper(ctx.getApplicationContext());
+        }
+        return mInstance;
+    }
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {

@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.atang.androidtodo.Model.TodoItem;
+import com.atang.androidtodo.models.TodoItem;
 import com.atang.androidtodo.dao.TodoDao;
 
 
@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         todoDao = new TodoDao(this);
-        CustomAdapter customAdapter;
         customAdapter = new CustomAdapter(this, todoDao.getToDo());
 
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_EDIT) {
@@ -96,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onAddItem(View view){
-        if ((etNewItem.getText().toString() == null) || (etNewItem.getText().toString().isEmpty())) {
+        if (etNewItem.getText().toString().isEmpty()) {
             Toast.makeText(getApplicationContext(), "Please Enter an Item", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -149,21 +148,19 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                return true;
+            case R.id.action_exit:
+                System.exit(0);
+                return true;
         }
 
         return super.onOptionsItemSelected(item);

@@ -1,4 +1,4 @@
-package com.atang.androidtodo.Model;
+package com.atang.androidtodo.models;
 
 /**
  * Created by atang on 3/29/16.

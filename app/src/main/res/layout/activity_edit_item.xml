@@ -8,29 +8,30 @@
         android:id="@+id/tvEditItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="30dp"
+        android:paddingTop="@dimen/padding_30"
         android:text="@string/edit_item_below"
-        android:textSize="25sp" />
+        android:textSize="@dimen/padding_25" />
 
     <EditText
         android:id="@+id/etEditItemText"
-        android:layout_width="300dp"
+        android:layout_width="@dimen/padding_300"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/tvEditItem"
-        android:layout_marginLeft="35dp"
+        android:layout_marginLeft="@dimen/padding_35"
+        android:layout_marginStart="@dimen/padding_35"
         android:hint="@string/original_text"
-        android:paddingTop="30dp" />
+        android:paddingTop="@dimen/padding_30" />
 
     <TextView
         android:id="@+id/tvEditItemPriority"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/etEditItemText"
-        android:paddingTop="30dp"
+        android:paddingTop="@dimen/padding_30"
         android:text="@string/priority"
-        android:textSize="25sp" />
+        android:textSize="@dimen/padding_25" />
 
 
     <RadioGroup
@@ -46,24 +47,24 @@
             android:id="@+id/rbPriorityLow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="35dp"
-            android:layout_marginStart="35dp"
+            android:layout_marginLeft="@dimen/padding_35"
+            android:layout_marginStart="@dimen/padding_35"
             android:text="@string/low" />
 
         <RadioButton
             android:id="@+id/rbPriorityMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="35dp"
-            android:layout_marginStart="35dp"
+            android:layout_marginLeft="@dimen/padding_35"
+            android:layout_marginStart="@dimen/padding_35"
             android:text="@string/medium" />
 
         <RadioButton
             android:id="@+id/rbPriorityHigh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="35dp"
-            android:layout_marginStart="35dp"
+            android:layout_marginLeft="@dimen/padding_35"
+            android:layout_marginStart="@dimen/padding_35"
             android:text="@string/high" />
 
     </RadioGroup>
@@ -74,8 +75,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_below="@id/rgEditItemPriorityText"
-        android:layout_marginTop="30sp"
+        android:layout_marginTop="@dimen/padding_30"
         android:text="@string/change_date" />
 
     <TextView
@@ -83,11 +85,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/rgEditItemPriorityText"
-        android:layout_marginLeft="25sp"
+        android:layout_marginLeft="@dimen/padding_25"
+        android:layout_marginStart="@dimen/padding_25"
+        android:layout_toEndOf="@id/btnEditItemChangeDate"
         android:layout_toRightOf="@id/btnEditItemChangeDate"
         android:hint="@string/date_not_set"
-        android:paddingTop="40dp"
-        android:textSize="25sp"
+        android:paddingTop="@dimen/padding_40"
+        android:textSize="@dimen/padding_25"
         android:textStyle="italic" />
 
     <Button

@@ -6,10 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.atang.androidtodo.Model.TodoItem;
+import com.atang.androidtodo.models.TodoItem;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -36,6 +38,7 @@ public class CustomAdapter extends ArrayAdapter<TodoItem> {
         final TextView titleView = (TextView) convertView.findViewById(R.id.todoText);
         final TextView priority = (TextView) convertView.findViewById(R.id.priorityView);
         final TextView date = (TextView) convertView.findViewById(R.id.dateView);
+        final ImageView overdue = (ImageView) convertView.findViewById(R.id.ivOverdue);
         final TodoItem toDoItem = getItem(position);
 
 
@@ -57,21 +60,24 @@ public class CustomAdapter extends ArrayAdapter<TodoItem> {
         // Date
         date.setText(toDoItem.getCompletionDate());
 
-        // Text
+        // Task Name
         titleView.setText(toDoItem.getText());
-          // if overdue, show overdue icon
-//        if (!toDoItem.getCompletionDate().equalsIgnoreCase("not set")) {
-//            Calendar cal = Calendar.getInstance();
-//            int nowYear = cal.get(Calendar.YEAR);
-//            int nowMonth = cal.get(Calendar.MONTH) + 1;
-//            int nowDate = cal.get(Calendar.DATE);
-//            int currentDate = nowYear * 10000 + nowMonth * 100 + nowDate;
-//            int dueDate = Integer.parseInt(toDoItem.getCompletionDate());
-//
-//            if (currentDate > dueDate) {
-//                titleView.setText(toDoItem.getText() + "  OVERDUE");
-//            }
-//        }
+
+        // Icon -- show if overdue
+        if (!toDoItem.getCompletionDate().equalsIgnoreCase("not set")) {
+            Calendar cal = Calendar.getInstance();
+            int nowYear = cal.get(Calendar.YEAR);
+            int nowMonth = cal.get(Calendar.MONTH) + 1;
+            int nowDate = cal.get(Calendar.DATE);
+            nowDate = nowYear * 10000 + nowMonth * 100 + nowDate;
+            int dueDate = Integer.parseInt(toDoItem.getCompletionDate());
+
+            if (nowDate > dueDate) {
+                overdue.setVisibility(View.VISIBLE);
+            } else {
+                overdue.setVisibility(View.INVISIBLE);
+            }
+        }
 
         return convertView;
     }

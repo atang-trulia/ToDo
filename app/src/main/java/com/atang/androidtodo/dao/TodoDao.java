@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.atang.androidtodo.Model.TodoItem;
+import com.atang.androidtodo.models.TodoItem;
 import com.atang.androidtodo.database.TodoSqlLiteHelper;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class TodoDao {
     private TodoSqlLiteHelper dbhelper;
 
     public TodoDao(Context context) {
-        dbhelper = new TodoSqlLiteHelper(context);
+        dbhelper = dbhelper.getInstance(context);
         db = dbhelper.getWritableDatabase();
     }
 
@@ -57,19 +57,23 @@ public class TodoDao {
 //        Cursor cursor = db.query("todos", columns, null, null, null, null, "date"+sortOrder);
         Cursor cursor = db.query("todos", columns, null, null, null, null, null);
 
-
         cursor.moveToFirst();
-
-        //loop through the results
-        while(!cursor.isAfterLast()){
-            TodoItem todoitem = new TodoItem();
-            todoitem.setId(cursor.getInt(0));
-            todoitem.setText(cursor.getString(1));
-            todoitem.setPriority(cursor.getString(2));
-            todoitem.setCompletionDate(cursor.getString(3));
-            todoList.add(todoitem);
-            cursor.moveToNext();
+        try {
+            //loop through the results
+            while(!cursor.isAfterLast()){
+                TodoItem todoitem = new TodoItem();
+                todoitem.setId(cursor.getInt(0));
+                todoitem.setText(cursor.getString(1));
+                todoitem.setPriority(cursor.getString(2));
+                todoitem.setCompletionDate(cursor.getString(3));
+                todoList.add(todoitem);
+                cursor.moveToNext();
+            }
+        } finally {
+            if (!cursor.isClosed())
+                cursor.close();
         }
+//        db.close();
 
         return todoList;
     }

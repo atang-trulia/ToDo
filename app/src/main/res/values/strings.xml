@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">AndroidToDo</string>
-    <string name="action_settings">Settings</string>
 
     // MainActivity
     <string name="enter_a_new_item">enter a new item</string>
@@ -16,5 +15,17 @@
     <string name="change_date">Change Date</string>
     <string name="date_not_set">Date not set</string>
     <string name="save">Save</string>
+
+    // Custom Adapter individual item
+    <string name="item_hint">empty task</string>
+    <string name="item_date_label">Due:</string>
+    <string name="item_date_hint">not set</string>
+    <string name="item_priority">Priority:</string>
+    <string name="item_null" />
+    <string name="item_priority_hint">PriorityText</string>
+
+    // Menu
+    <string name="action_settings">Settings</string>
+    <string name="action_exit">Exit</string>
 
 </resources>
