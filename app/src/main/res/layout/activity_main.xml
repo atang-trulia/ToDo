@@ -30,7 +30,8 @@
         android:layout_toLeftOf="@id/btnAddItem"
         android:layout_toStartOf="@id/btnAddItem"
         android:editable="true"
-        android:hint="@string/enter_a_new_item" />
+        android:hint="@string/enter_a_new_item"
+        android:maxLength="@string/new_item_max_length" />
 
     <Button
         android:id="@+id/btnAddItem"

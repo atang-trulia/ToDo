@@ -14,6 +14,8 @@ import com.atang.androidtodo.models.TodoItem;
 import java.util.Calendar;
 import java.util.List;
 
+import static com.atang.androidtodo.MainActivity.NOT_SET;
+
 /**
  * Created by atang on 3/30/16.
  */
@@ -23,7 +25,7 @@ public class CustomAdapter extends ArrayAdapter<TodoItem> {
     private final List<TodoItem> todolist;
 
     public CustomAdapter(Context context, List<TodoItem> todolist) {
-        super(context,R.layout.todolist,todolist);
+        super(context,R.layout.todolist, todolist);
         this.context=context;
         this.todolist=todolist;
     }
@@ -41,6 +43,9 @@ public class CustomAdapter extends ArrayAdapter<TodoItem> {
         final ImageView overdue = (ImageView) convertView.findViewById(R.id.ivOverdue);
         final TodoItem toDoItem = getItem(position);
 
+
+        // Task Name
+        titleView.setText(toDoItem.getText());
 
         // Priority
         String priorityString = toDoItem.getPriority();
@@ -60,11 +65,8 @@ public class CustomAdapter extends ArrayAdapter<TodoItem> {
         // Date
         date.setText(toDoItem.getCompletionDate());
 
-        // Task Name
-        titleView.setText(toDoItem.getText());
-
         // Icon -- show if overdue
-        if (!toDoItem.getCompletionDate().equalsIgnoreCase("not set")) {
+        if (!toDoItem.getCompletionDate().equalsIgnoreCase(NOT_SET)) {
             Calendar cal = Calendar.getInstance();
             int nowYear = cal.get(Calendar.YEAR);
             int nowMonth = cal.get(Calendar.MONTH) + 1;

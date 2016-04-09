@@ -1,8 +1,8 @@
 package com.atang.androidtodo;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,28 +13,33 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.atang.androidtodo.models.TodoItem;
 import com.atang.androidtodo.dao.TodoDao;
+import com.atang.androidtodo.fragments.EditItemFragment;
+import com.atang.androidtodo.models.TodoItem;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements EditItemFragment.EditItemListener {
 
     public static final String EXTRA_ORIGINAL_TEXT = "EXTRA_ORIGINAL_TEXT";
     public static final String EXTRA_ORIGINAL_POSITION = "EXTRA_ORIGINAL_POSITION";
     public static final String EXTRA_ORIGINAL_PRIORITY = "EXTRA_ORIGINAL_PRIORITY";
     public static final String EXTRA_ORIGINAL_DATE = "EXTRA_ORIGINAL_DATE";
+    public static final String NOT_SET = "not set";
 
     ListView listView;
     EditText etNewItem;
     CustomAdapter customAdapter;
+    TodoItem selectedTodoItem;
     private int REQUEST_CODE_EDIT = 200;
     private TodoDao todoDao;
+    int pos;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         listView = (ListView) findViewById(R.id.lvItems);
         etNewItem = (EditText) findViewById(R.id.etNewItem);
         todoDao = new TodoDao(this);
@@ -59,40 +64,42 @@ public class MainActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                TodoItem todoItem = customAdapter.getItem(position);
+                pos = position;
+                selectedTodoItem = customAdapter.getItem(position);
+                showEditItemDialog(selectedTodoItem.getText(), selectedTodoItem.getPriority(), selectedTodoItem.getCompletionDate());
 
-                Intent intentEditItem = new Intent(MainActivity.this, EditItemActivity.class);
-                intentEditItem.putExtra(EXTRA_ORIGINAL_TEXT, todoItem.getText());
-                intentEditItem.putExtra(EXTRA_ORIGINAL_POSITION, position);
-                intentEditItem.putExtra(EXTRA_ORIGINAL_PRIORITY, todoItem.getPriority());
-                intentEditItem.putExtra(EXTRA_ORIGINAL_DATE, todoItem.getCompletionDate());
-                startActivityForResult(intentEditItem, REQUEST_CODE_EDIT);
+                // Intent intentEditItem = new Intent(MainActivity.this, EditItemActivity.class);
+                // intentEditItem.putExtra(EXTRA_ORIGINAL_TEXT, todoItem.getText());
+                // intentEditItem.putExtra(EXTRA_ORIGINAL_POSITION, position);
+                // intentEditItem.putExtra(EXTRA_ORIGINAL_PRIORITY, todoItem.getPriority());
+                // intentEditItem.putExtra(EXTRA_ORIGINAL_DATE, todoItem.getCompletionDate());
+                // startActivityForResult(intentEditItem, REQUEST_CODE_EDIT);
             }
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        todoDao = new TodoDao(this);
-        customAdapter = new CustomAdapter(this, todoDao.getToDo());
-
-        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_EDIT) {
-            String name = data.getExtras().getString(EXTRA_ORIGINAL_TEXT);
-            int position = data.getExtras().getInt(EXTRA_ORIGINAL_POSITION);
-            String priority=data.getExtras().getString(EXTRA_ORIGINAL_PRIORITY);
-            String date=data.getExtras().getString(EXTRA_ORIGINAL_DATE);
-
-            TodoItem todoItem = customAdapter.getItem(position);
-            todoItem.setText(name);
-            todoItem.setPriority(priority);
-            todoItem.setCompletionDate(date);
-            todoDao.updateToDo(todoItem);
-
-            customAdapter = new CustomAdapter(this, todoDao.getToDo());
-            listView.setAdapter(customAdapter);
-            customAdapter.notifyDataSetChanged();
-        }
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        todoDao = new TodoDao(this);
+//        customAdapter = new CustomAdapter(this, todoDao.getToDo());
+//
+//        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_EDIT) {
+//            String name = data.getExtras().getString(EXTRA_ORIGINAL_TEXT);
+//            int position = data.getExtras().getInt(EXTRA_ORIGINAL_POSITION);
+//            String priority=data.getExtras().getString(EXTRA_ORIGINAL_PRIORITY);
+//            String date=data.getExtras().getString(EXTRA_ORIGINAL_DATE);
+//
+//            TodoItem todoItem = customAdapter.getItem(position);
+//            todoItem.setText(name);
+//            todoItem.setPriority(priority);
+//            todoItem.setCompletionDate(date);
+//            todoDao.updateToDo(todoItem);
+//
+//            customAdapter = new CustomAdapter(this, todoDao.getToDo());
+//            listView.setAdapter(customAdapter);
+//            customAdapter.notifyDataSetChanged();
+//        }
+//    }
 
     public void onAddItem(View view){
         if (etNewItem.getText().toString().isEmpty()) {
@@ -103,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         TodoItem newItem = new TodoItem();
         newItem.setText(etNewItem.getText().toString());
         newItem.setPriority("Low");
-        newItem.setCompletionDate("not set");
+        newItem.setCompletionDate(NOT_SET);
         etNewItem.setText("");
 
         todoDao.createToDo(newItem);
@@ -165,4 +172,27 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    private void showEditItemDialog(String name, String priority, String date) {
+        FragmentManager fm = getSupportFragmentManager();
+        EditItemFragment editItemDialog = EditItemFragment.newInstance("Edit Task", name, priority, date);
+        editItemDialog.show(fm, "fragment_edit_item");
+    }
+
+    @Override
+    public void onFinishEditDialog(String inputText, String date, String priority) {
+        todoDao = new TodoDao(this);
+        customAdapter = new CustomAdapter(this, todoDao.getToDo());
+
+        TodoItem todoItem = customAdapter.getItem(pos);
+        todoItem.setText(inputText);
+        todoItem.setPriority(priority);
+        todoItem.setCompletionDate(date);
+
+        todoDao.updateToDo(todoItem);
+        customAdapter = new CustomAdapter(this, todoDao.getToDo());
+        listView.setAdapter(customAdapter);
+        customAdapter.notifyDataSetChanged();
+    }
+
 }

@@ -4,6 +4,7 @@
     // MainActivity
     <string name="enter_a_new_item">enter a new item</string>
     <string name="add_item">ADD ITEM</string>
+    <string name="new_item_max_length">30</string>
 
     // EditItemActivity
     <string name="edit_item_below">Edit Item Below:</string>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvEditItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/edit_item_below"
+        android:textSize="@dimen/padding_25" />
+
+    <EditText
+        android:id="@+id/etEditItemText"
+        android:layout_width="@dimen/padding_300"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tvEditItem"
+        android:layout_marginLeft="@dimen/padding_35"
+        android:layout_marginStart="@dimen/padding_35"
+        android:hint="@string/original_text"
+        android:maxLength="30"
+        android:singleLine="true" />
+
+    <TextView
+        android:id="@+id/tvEditItemPriority"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etEditItemText"
+        android:text="@string/priority"
+        android:textSize="@dimen/padding_25" />
+
+
+    <RadioGroup
+        android:id="@+id/rgEditItemPriorityText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tvEditItemPriority"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rbPriorityLow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding_35"
+            android:layout_marginStart="@dimen/padding_35"
+            android:text="@string/low" />
+
+        <RadioButton
+            android:id="@+id/rbPriorityMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/abc_action_bar_overflow_padding_start_material"
+            android:layout_marginStart="@dimen/padding_35"
+            android:text="@string/medium" />
+
+        <RadioButton
+            android:id="@+id/rbPriorityHigh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/abc_action_bar_overflow_padding_start_material"
+            android:layout_marginStart="@dimen/padding_35"
+            android:text="@string/high" />
+
+    </RadioGroup>
+
+
+    <DatePicker
+        android:id="@+id/datePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/rgEditItemPriorityText"
+        android:layout_centerHorizontal="true"
+        android:scaleX="0.85"
+        android:scaleY="0.85" />
+
+    <Button
+        android:id="@+id/btnEditItemSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="onEditorAction"
+        android:text="@string/save" />
+
+</RelativeLayout>

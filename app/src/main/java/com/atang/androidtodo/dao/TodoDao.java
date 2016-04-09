@@ -53,8 +53,8 @@ public class TodoDao {
     public List<TodoItem> getToDo() {
         List<TodoItem> todoList = new ArrayList<TodoItem>();
         String[] columns = new String[]{"_id","todo","priority","date"};
-        String sortOrder = " ASC";      // ASC or DESC
-//        Cursor cursor = db.query("todos", columns, null, null, null, null, "date"+sortOrder);
+        String sortOrder = " ASC";      // sorting by date: ASC or DESC
+        // Cursor cursor = db.query("todos", columns, null, null, null, null, "date"+sortOrder);
         Cursor cursor = db.query("todos", columns, null, null, null, null, null);
 
         cursor.moveToFirst();
@@ -73,7 +73,7 @@ public class TodoDao {
             if (!cursor.isClosed())
                 cursor.close();
         }
-//        db.close();
+        // db.close();
 
         return todoList;
     }
